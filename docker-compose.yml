@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # API Gateway
+  api-gateway:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/api-gateway
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - JWT_EXPIRES_IN=24h
+      - USER_SERVICE_URL=http://user-service:3001
+      - ORDER_SERVICE_URL=http://order-service:3002
+      - PRODUCT_SERVICE_URL=http://product-service:3003
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # MongoDB
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=api-gateway
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - microservices
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Example User Service (placeholder)
+  user-service:
+    image: nginx:alpine
+    ports:
+      - "3001:80"
+    volumes:
+      - ./examples/user-service.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # Example Order Service (placeholder)
+  order-service:
+    image: nginx:alpine
+    ports:
+      - "3002:80"
+    volumes:
+      - ./examples/order-service.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # Example Product Service (placeholder)
+  product-service:
+    image: nginx:alpine
+    ports:
+      - "3003:80"
+    volumes:
+      - ./examples/product-service.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - microservices
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  microservices:
+    driver: bridge

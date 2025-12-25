@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REST API Gateway — Demo Mode</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div>
+          <div class="kicker">DEMO MODE (static showcase)</div>
+          <h1>REST API Gateway</h1>
+          <p class="subtitle">A tiny in-browser “API explorer” with mocked responses.</p>
+        </div>
+        <div class="header-actions">
+          <a class="btn" href="https://github.com/krispykeenz/Restful_Api" target="_blank" rel="noopener">View repo</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>What this project demonstrates</h2>
+        <ul class="bullets">
+          <li>Auth middleware patterns (JWT / API keys)</li>
+          <li>Rate limiting and request routing</li>
+          <li>Security middleware and consistent error responses</li>
+        </ul>
+        <p class="muted">This demo simulates requests locally — no server, MongoDB, or Redis is required.</p>
+      </section>
+
+      <section class="card" style="margin-top: 1rem;">
+        <div class="row">
+          <h2 class="m0">Demo API explorer</h2>
+          <div class="row gap-sm">
+            <label class="field">
+              <span class="label">Endpoint</span>
+              <select id="endpointSelect"></select>
+            </label>
+            <button class="btn" id="copyCurlBtn" type="button">Copy curl</button>
+            <button class="btn btn-primary" id="sendBtn" type="button">Send (simulated)</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="grid-2" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <div class="muted">Request</div>
+            <pre class="code" id="requestPre"></pre>
+          </div>
+          <div>
+            <div class="muted">Response</div>
+            <pre class="code" id="responsePre"></pre>
+          </div>
+        </div>
+
+        <p class="muted small" id="statusLine" style="margin-top: 0.75rem;"></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <span class="muted">REST API Gateway — Demo Mode</span>
+        <span class="muted">Static portfolio build</span>
+      </div>
+    </footer>
+
+    <!-- DEMO MODE ONLY: safe, static showcase. Remove the /demo folder when publishing a real deployment. -->
+    <script src="./app.js"></script>
+  </body>
+</html>
